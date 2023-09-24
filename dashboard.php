@@ -6,6 +6,10 @@
  exit;
 }
 
+if (!isset($_SESSION["listKamar"])) {
+    $_SESSION["listKamar"] = [];
+}
+
  $detail = [
  "name" => "Grand Atma",
  "tagline" => "Hotel & Resort",
@@ -83,9 +87,42 @@
                     </div>
                 </div>
             </div>
-    </main>
+            <div class="row">
+                <div class="col-lg-6">
+                    <h2 class="mt-5 mb-3 border-bottom fw-bold">Daftar Kamar</h2>
+                    <p>Grand Atma saat ini mempunyai <strong><?php echo count($_SESSION['listKamar']) ?></strong> kamar</p>
+                    <a href="tambahKamar.php" class="btn btn-primary">Tambah Kamar</a>
+                    <ul class="list-unstyled">
+                        <?php foreach ($_SESSION['listKamar'] as $index => $kamar) : ?>
+                            <li class="card card-body mt-5">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <div>
+                                            <img src="./assets/images/featurette-2.jpeg" class="img-bukti-ngantor" alt="Rusak" />
+                                        </div>
+                                    </div>
 
+                                    <div class="col-md-10">
+                                        <div class="justify-content-center">
+                                            <h3><?php echo $kamar['namaKamar']; ?></h3>
+                                            <p class="border-bottom">
+                                                <?php echo $kamar['deskripsi']; ?></p>
+                                            <p>Tipe Kamar: 
+                                                <strong> <?php echo $kamar['tipe']; ?> </strong> - Base Price: 
+                                                <strong>Rp. <?php echo $kamar['harga']; ?></strong></p>
+                                            <form method="POST" action="./processHapusKamar.php">
+                                                <input type="hidden" name="index" value="<?php echo $index ?>" />
+                                                <button name="hapusKamar">Hapus</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+            </div>
+    </main>
     <script src="./assets/js/bootstrap.min.js"></script>
  </body>
-
  </html>
